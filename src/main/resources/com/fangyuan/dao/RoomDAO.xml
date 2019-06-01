@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fangyuan.dao.RoomDAO">
+    <select id="query4Search" resultType="com.fangyuan.entity.Room">
+      SELECT id, district, districtCN, area, orient,
+      layout, layoutCN, tags, title, room_floor, price
+      FROM room
+        <where>
+            <if test="so.district != null">
+                and district = #{so.district}
+            </if>
+            <if test="so.priceLow != null">
+                <![CDATA[
+              and price > #{so.priceLow}
+              ]]>
+            </if>
+            <if test="so.priceHigh != null">
+                <![CDATA[
+              and price < #{so.priceHigh}
+              ]]>
+            </if>
+            <if test="so.areaLow != null">
+                <![CDATA[
+              and area > #{so.areaLow}
+              ]]>
+            </if>
+            <if test="so.areaHigh != null">
+                <![CDATA[
+              and area < #{so.areaHigh}
+              ]]>
+            </if>
+            <if test="so.layout != null">
+                and layout = #{so.layout}
+            </if>
+        </where>
+    </select>
+
+    <select id="batchRooms4Browser" resultType="com.fangyuan.entity.Room">
+        select id, district, districtCN, area, orient, layout, layoutCN, tags, title, room_floor, price
+        from room where id in
+        <foreach collection="ids" open="(" separator="," close=")" item="id">
+            #{id}
+        </foreach>
+    </select>
+</mapper>
