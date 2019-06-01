@@ -28,6 +28,3 @@ HELP.md
 ### VS Code ###
 .vscode/
 
-.mvn/
-mvnw
-mvnw.cmd
