@@ -2,6 +2,7 @@ package com.fangyuan.controller;
 
 import com.fangyuan.exception.RoomException;
 import com.fangyuan.result.Result;
+import com.fangyuan.service.RecommendService;
 import com.fangyuan.service.RoomService;
 import com.fangyuan.so.SearchSO;
 import com.fangyuan.vo.BrowserHistoryVO;
@@ -19,6 +20,8 @@ import javax.validation.Valid;
 public class RoomController {
     @Autowired
     RoomService roomService;
+    @Autowired
+    RecommendService recommendService;
 
     @ResponseBody
     @RequestMapping(path = {"/search"}, method = {RequestMethod.GET, RequestMethod.POST})
@@ -31,7 +34,7 @@ public class RoomController {
     @RequestMapping(path = {"/recommend"}, method = {RequestMethod.GET, RequestMethod.POST})
     public Result<FangYuanListVO> recommend() {
         log.info("[RoomController] recommend start.");
-        return Result.success(roomService.getHomeData());
+        return Result.success(recommendService.recommendRoom());
     }
 
     @ResponseBody

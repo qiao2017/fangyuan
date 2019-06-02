@@ -43,4 +43,10 @@
             #{id}
         </foreach>
     </select>
+
+
+    <select id="batchQueryAll4Similarity" resultType="com.fangyuan.vo.SimilarityVO">
+        select id as roomId, district, price, area, layout
+        from room
+    </select>
 </mapper>

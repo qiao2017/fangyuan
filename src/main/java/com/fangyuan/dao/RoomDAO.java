@@ -2,6 +2,7 @@ package com.fangyuan.dao;
 
 import com.fangyuan.entity.Room;
 import com.fangyuan.so.SearchSO;
+import com.fangyuan.vo.SimilarityVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
@@ -21,4 +22,6 @@ public interface RoomDAO {
     List<Room> query4Detail(@Param("id") int id);
 
     List<Room> batchRooms4Browser(@Param("ids") List<Integer> ids);
+
+    List<SimilarityVO> batchQueryAll4Similarity();
 }

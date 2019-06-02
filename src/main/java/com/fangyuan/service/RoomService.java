@@ -132,7 +132,13 @@ public class RoomService {
         item.setPrice(room.getPrice());
         item.setLayout(room.getLayoutCN());
         item.setOrient(room.getOrient());
-        item.setTags(Arrays.asList(room.getTags()));
+        String tag = room.getTags();
+        String[] tags = tag.split("\\|");
+        List<String> t = new ArrayList<>();
+        for (String str : tags){
+            t.add(str);
+        }
+        item.setTags(t);
         item.setRoomFloor(room.getRoomFloor());
         return item;
     }
