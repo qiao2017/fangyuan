@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
@@ -21,10 +22,11 @@ public class RegisterController {
     UserService userService;
 
     @RequestMapping(path = {"/do_register"},
-            method = {RequestMethod.POST},
+            method = {RequestMethod.POST, RequestMethod.OPTIONS},
             produces = "application/json;charset=UTF-8")
     @ResponseBody
     public Result doRegister(@Valid @RequestBody LoginSO so,
+                          HttpServletRequest request,
                           HttpServletResponse response) throws RegisterException {
         log.info("[LoginController] doRegister start, param is {}", so);
         String token = userService.register(so);
@@ -34,6 +36,6 @@ public class RegisterController {
             cookie.setMaxAge(3600*24*5);
         }
         response.addCookie(cookie);
-        return Result.success();
+        return Result.success(token);
     }
 }

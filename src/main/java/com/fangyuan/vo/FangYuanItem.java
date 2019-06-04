@@ -16,4 +16,5 @@ public class FangYuanItem {
     private String orient;
     private List<String> tags;
     private String roomFloor;
+    private Integer lay;
 }

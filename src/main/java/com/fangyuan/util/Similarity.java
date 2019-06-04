@@ -22,7 +22,7 @@ public class Similarity {
     @Autowired
     RoomDAO roomDAO;
     // key -> roomId， value -> 四个特征向量
-    public static Map<Integer, List<Integer>> rooms = new ConcurrentHashMap<>();
+    public static Map<Integer, List<Double>> rooms = new ConcurrentHashMap<>();
     // district, price， area, layout,
     public static final double[] weight = new double[]{0.25, 0.25, 0.25, 0.25};
 
@@ -34,7 +34,7 @@ public class Similarity {
         System.out.println(vos.size());
         System.out.println(vos.get(0));
         rooms = vos.stream().collect(Collectors.toMap(SimilarityVO::getRoomId, vo ->{
-            List<Integer> list = new ArrayList<>();
+            List<Double> list = new ArrayList<>();
             list.add(vo.getDistrict());
             list.add(vo.getPrice());
             list.add(vo.getArea());
@@ -49,7 +49,7 @@ public class Similarity {
      * @param vectorB
      * @return
      */
-    public static double cosineSimilarity(List<Integer> vectorA, List<Integer> vectorB, int exclude){
+    public static double cosineSimilarity(List<Double> vectorA, List<Double> vectorB, int exclude){
         int molA = 0;
         int molB = 0;
         int product = 0;
@@ -70,7 +70,7 @@ public class Similarity {
      * @param vectorB
      * @return
      */
-    public static double cosineSimilarityWithWeight(List<Integer> vectorA, List<Integer> vectorB){
+    public static double cosineSimilarityWithWeight(List<Double> vectorA, List<Double> vectorB){
         double[] cos = new double[vectorA.size()];
         for (int i = 0; i < cos.length; i++){
             cos[i] = cosineSimilarity(vectorA, vectorB, i);
@@ -82,9 +82,6 @@ public class Similarity {
         return sim;
     }
 
-    public static void main(String[] args) {
-        System.out.println(cosineSimilarity(Arrays.asList(1, 2, 3, 4), Arrays.asList(1, 0, 0, 0), -1));
-    }
 
     /**
      * 传入用户特征，获得推荐
@@ -92,11 +89,11 @@ public class Similarity {
      * @param num
      * @return
      */
-    public List<Integer> getRecommend(List<Integer> userChar, int num){
+    public List<Integer> getRecommend(List<Double> userChar, int num){
         List<Integer> ids = new ArrayList<>();
         List<Pair<Double, Integer>> sims = new ArrayList<>(rooms.size());
         // 计算相似度
-        for (Map.Entry<Integer, List<Integer>> entry : rooms.entrySet()){
+        for (Map.Entry<Integer, List<Double>> entry : rooms.entrySet()){
 //            double sim = cosineSimilarityWithWeight(userChar, entry.getValue());
             double sim = cosineSimilarity(userChar, entry.getValue(), -1);
             sims.add(new MutablePair(sim, entry.getKey()));

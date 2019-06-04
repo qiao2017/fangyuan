@@ -4,6 +4,8 @@ import com.fangyuan.result.Result;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -12,7 +14,7 @@ import java.util.Map;
 @RequestMapping("/tag")
 public class TagController {
     @ResponseBody
-    @RequestMapping(path = {"/district"}, method = {RequestMethod.GET, RequestMethod.POST})
+    @RequestMapping(path = {"/district"}, method = {RequestMethod.GET, RequestMethod.POST, RequestMethod.OPTIONS})
     public Result<Map> logout() {
         Map<Integer, String> map = new HashMap<>();
         map.put(1, "西湖");

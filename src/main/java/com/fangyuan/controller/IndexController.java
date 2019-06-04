@@ -4,14 +4,11 @@ import com.fangyuan.result.Result;
 import com.fangyuan.service.RoomService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
-@RestController
 @RequestMapping("/home")
 @Slf4j
 public class IndexController {
@@ -19,7 +16,7 @@ public class IndexController {
     RoomService roomService;
 
     @RequestMapping(path = {"/homepage"},
-            method = {RequestMethod.POST, RequestMethod.GET},
+            method = {RequestMethod.POST, RequestMethod.GET, RequestMethod.OPTIONS},
             produces = "application/json;charset=UTF-8")
     @ResponseBody
     public Result homepage(HttpServletRequest request) {

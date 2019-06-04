@@ -117,6 +117,7 @@ public class RoomService {
             item.setTags(Arrays.asList(room.getTags()));
             item.setRoomFloor(room.getRoomFloor());
             item.setRoomId(room.getId());
+            item.setLay(room.getLayout());
             return item;
         }).collect(Collectors.toList());
         return items;

@@ -33,15 +33,27 @@
             <if test="so.layout != null">
                 and layout = #{so.layout}
             </if>
+            <if test="so.districtList != null and so.districtList.size() > 0">
+                and district in
+                <foreach collection="so.districtList" item="district" open="(" close=")" separator=",">
+                    #{district}
+                </foreach>
+            </if>
         </where>
     </select>
 
     <select id="batchRooms4Browser" resultType="com.fangyuan.entity.Room">
         select id, district, districtCN, area, orient, layout, layoutCN, tags, title, room_floor, price
-        from room where id in
-        <foreach collection="ids" open="(" separator="," close=")" item="id">
-            #{id}
-        </foreach>
+        from room
+        <if test="ids != null and ids.size() > 0">
+            where id in
+            <foreach collection="ids" open="(" separator="," close=")" item="id">
+                #{id}
+            </foreach>
+        </if>
+        <if test="ids == null or ids.size() == 0">
+            where 1=2
+        </if>
     </select>
 
 

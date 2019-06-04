@@ -43,6 +43,7 @@ public class PassportInterceptor implements HandlerInterceptor{
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
             throws Exception {
+
         String token = null;
 
         if (request.getCookies() != null) {
@@ -52,6 +53,9 @@ public class PassportInterceptor implements HandlerInterceptor{
                     break;
                 }
             }
+        }
+        if(request.getParameter("token") != null){
+            token = request.getParameter("token");
         }
         if (token == null){
             response.setCharacterEncoding("utf-8");
